@@ -44,6 +44,23 @@ document
     document.getElementById("formEstudante").reset();
   });
 
+// 🔴 NOVA FUNÇÃO PARA EXCLUIR ALUNO
+function excluirAluno(nome) {
+  const index = estudantes.findIndex((est) => est.nome === nome);
+
+  if (index !== -1) {
+    estudantes.splice(index, 1);
+    atualizarTabela();
+    document.getElementById(
+      "resultado"
+    ).innerHTML = `🗑️ Estudante ${nome} removido com sucesso!`;
+  } else {
+    document.getElementById(
+      "resultado"
+    ).innerHTML = `⚠️ Estudante ${nome} não encontrado.`;
+  }
+}
+
 function atualizarTabela() {
   const tbody = document.querySelector("#tabela tbody");
   tbody.innerHTML = "";
@@ -56,6 +73,9 @@ function atualizarTabela() {
       <td>${est.notas.join(", ")}</td>
       <td>${est.media.toFixed(2)}</td>
       <td>${statusAluno(est.media)}</td>
+      <td>
+        <button onclick="excluirAluno('${est.nome}')">❌ Excluir</button>
+      </td>
     `;
     tbody.appendChild(row);
   });
